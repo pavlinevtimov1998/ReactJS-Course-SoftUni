@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { useState, useEffect } from "react";
 
 // import { Spinner } from "./Spinner";
@@ -12,6 +13,20 @@ export const TodoList = () => {
       .then((result) => setList(Object.values(result)));
   }, []);
 
+  const completeHandler = (todo) => {
+    fetch("http://localhost:3030/jsonstore/todos/" + todo._id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...todo, isCompleted: !todo.isCompleted }),
+    })
+      .then((response) => response.json())
+      .then((result) =>
+        setList((list) => list.map((t) => (t._id == todo._id ? result : t)))
+      );
+  };
+
   return (
     <table className="table">
       <thead>
@@ -23,7 +38,7 @@ export const TodoList = () => {
       </thead>
       <tbody>
         {todoList.map((t) => (
-          <TodoItem key={t._id} {...t} />
+          <TodoItem key={t._id} {...t} clickHandler={completeHandler} />
         ))}
       </tbody>
     </table>
