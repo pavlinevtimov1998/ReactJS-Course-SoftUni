@@ -52,10 +52,9 @@ export const TodoList = () => {
             </td>
           </tr>
         )}
-        {!state.isLoading &&
-          state.todoList.map((t) => (
-            <TodoItem key={t._id} {...t} clickHandler={completeHandler} />
-          ))}
+        {state.todoList.map((t) => (
+          <TodoItem key={t._id} {...t} clickHandler={completeHandler} />
+        ))}
       </tbody>
     </table>
   );
