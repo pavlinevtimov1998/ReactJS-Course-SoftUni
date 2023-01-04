@@ -1,6 +1,8 @@
 import { Header } from "./components/common/Header";
 import { Footer } from "./components/common/Footer";
-import { Search } from "./components/searchComponent/Search";
+import { Search } from "./components/search/Search";
+import { UserTable } from "./components/userList/UserTable";
+import { Pagination } from "./components/pagination/Pagination";
 
 import "./App.css";
 
@@ -11,9 +13,10 @@ function App() {
 
       <main className="main">
         <section className="card users-container">
-          
           <Search />
+          <UserTable />
 
+          <Pagination />
         </section>
       </main>
 
