@@ -28,6 +28,15 @@ export const edit = async (id, userData) => {
   return result.user;
 };
 
+export const deleteUser = async (id) => {
+  const res = await fetch(`${apiUrl}/users/${id}`, {
+    method: "DELETE",
+  });
+  const result = await res.json();
+
+  return result.userId;
+};
+
 export const actions = {
   Details: "details",
   Create: "create",

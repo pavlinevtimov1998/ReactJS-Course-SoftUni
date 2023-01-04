@@ -23,7 +23,7 @@ export const UserItem = ({ user, actionHandler }) => {
         <button
           className="btn edit-btn"
           title="Edit"
-          onClick={() => actionHandler(actions.Edit, user._id)}
+          onClick={() => actionHandler(actions.Edit, user)}
         >
           <svg
             aria-hidden="true"
@@ -41,7 +41,11 @@ export const UserItem = ({ user, actionHandler }) => {
             ></path>
           </svg>
         </button>
-        <button className="btn delete-btn" title="Delete">
+        <button
+          className="btn delete-btn"
+          title="Delete"
+          onClick={() => actionHandler(actions.Delete, user)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -61,7 +65,7 @@ export const UserItem = ({ user, actionHandler }) => {
         <button
           className="btn info-btn"
           title="Info"
-          onClick={() => actionHandler(actions.Details, user._id)}
+          onClick={() => actionHandler(actions.Details, user)}
         >
           <svg
             aria-hidden="true"

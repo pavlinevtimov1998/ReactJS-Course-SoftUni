@@ -2,23 +2,26 @@ import { NoUsers } from "./NoUsers";
 import { UserItem } from "./UserItem";
 import { UserDetails } from "../userList/UserDetails";
 
-import { actions, edit, getOne } from "../../services/userService";
+import { actions, deleteUser, edit, getOne } from "../../services/userService";
 
 import { useState } from "react";
 import { EditUser } from "./EditUser";
+import { DeleteUser } from "./DeleteUser";
 
 export const UserTable = (props) => {
   const [userAction, setUserAction] = useState({ user: null, action: null });
 
-  const actionHandler = (action, id) => {
+  const actionHandler = (action, user) => {
     if (action === actions.Details) {
-      getOne(id).then((user) =>
+      getOne(user._id).then((user) =>
         setUserAction((userAction) => ({ user: user, action: action }))
       );
     } else if (action === actions.Edit) {
-      getOne(id).then((user) =>
+      getOne(user._id).then((user) =>
         setUserAction((userAction) => ({ user: user, action: action }))
       );
+    } else if (action === actions.Delete) {
+      setUserAction((userAction) => ({ user: user, action: action }));
     }
   };
 
@@ -42,13 +45,23 @@ export const UserTable = (props) => {
     };
 
     edit(userId, userData).then((user) => {
-      props.modifyUser(user);
+      props.modifyUsers(user, userAction.action);
       setUserAction({ user: null, action: null });
       closeModalHandler();
     });
   };
 
-  // const createBtnHandler = () => {};
+  const deleteUserHandler = (e) => {
+    e.preventDefault();
+
+    const userId = userAction.user._id;
+
+    deleteUser(userId).then((userId) => {
+      props.modifyUsers(userId, userAction.action);
+      setUserAction({ user: null, action: null });
+      closeModalHandler();
+    });
+  };
 
   const closeModalHandler = () => {
     setUserAction({ user: null, action: null });
@@ -67,6 +80,12 @@ export const UserTable = (props) => {
           user={userAction.user}
           closeModalHandler={closeModalHandler}
           editUser={editUser}
+        />
+      )}
+      {userAction.action === actions.Delete && (
+        <DeleteUser
+          closeModalHandler={closeModalHandler}
+          deleteUserHandler={deleteUserHandler}
         />
       )}
 
@@ -169,8 +188,9 @@ export const UserTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            {!props.users.length && <NoUsers />}
-            {/* <!-- Table row component --> */}
+
+            {/* {!props.users.length && <NoUsers />} */}
+
             {props.users.map((user) => (
               <UserItem
                 key={user._id}
