@@ -12,6 +12,18 @@ export const Main = () => {
     getAll().then((result) => setUsers(result));
   }, []);
 
+  const modifyUser = (modifiedUser) => {
+    setUsers(
+      users.map((user) => {
+        if (user._id === modifiedUser._id) {
+          return modifiedUser;
+        }
+
+        return user;
+      })
+    );
+  };
+
   const isUsers = users.length > 0 ? true : false;
 
   return (
@@ -20,7 +32,7 @@ export const Main = () => {
         <section className="card users-container">
           <Search />
 
-          <UserTable users={users} isUsers={isUsers} />
+          <UserTable users={users} isUsers={isUsers} modifyUser={modifyUser} />
 
           <Pagination />
         </section>

@@ -2,25 +2,72 @@ import { NoUsers } from "./NoUsers";
 import { UserItem } from "./UserItem";
 import { UserDetails } from "../userList/UserDetails";
 
-import { getOne } from "../../services/userService";
+import { actions, edit, getOne } from "../../services/userService";
 
 import { useState } from "react";
+import { EditUser } from "./EditUser";
 
 export const UserTable = (props) => {
-  const [user, setUser] = useState(null);
+  const [userAction, setUserAction] = useState({ user: null, action: null });
 
-  const detailsBtnHandler = (id) => {
-    getOne(id).then((user) => setUser(user));
+  const actionHandler = (action, id) => {
+    if (action === actions.Details) {
+      getOne(id).then((user) =>
+        setUserAction((userAction) => ({ user: user, action: action }))
+      );
+    } else if (action === actions.Edit) {
+      getOne(id).then((user) =>
+        setUserAction((userAction) => ({ user: user, action: action }))
+      );
+    }
   };
 
+  const editUser = (e) => {
+    e.preventDefault();
+
+    const userId = userAction.user._id;
+
+    const formData = new FormData(e.target);
+
+    const { firstName, lastName, email, phoneNumber, imageUrl, ...address } =
+      Object.fromEntries(formData);
+
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      imageUrl,
+      address: address,
+    };
+
+    edit(userId, userData).then((user) => {
+      props.modifyUser(user);
+      setUserAction({ user: null, action: null });
+      closeModalHandler();
+    });
+  };
+
+  // const createBtnHandler = () => {};
+
   const closeModalHandler = () => {
-    setUser(null);
+    setUserAction({ user: null, action: null });
   };
 
   return (
     <>
-      {user && (
-        <UserDetails user={user} closeModalHandler={closeModalHandler} />
+      {userAction.action === "details" && (
+        <UserDetails
+          user={userAction.user}
+          closeModalHandler={closeModalHandler}
+        />
+      )}
+      {userAction.action === "edit" && (
+        <EditUser
+          user={userAction.user}
+          closeModalHandler={closeModalHandler}
+          editUser={editUser}
+        />
       )}
 
       <div className="table-wrapper">
@@ -128,7 +175,7 @@ export const UserTable = (props) => {
               <UserItem
                 key={user._id}
                 user={user}
-                detailsBtnHandler={detailsBtnHandler}
+                actionHandler={actionHandler}
               />
             ))}
           </tbody>

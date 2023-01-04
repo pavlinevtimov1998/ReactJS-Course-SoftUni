@@ -1,4 +1,6 @@
-export const UserItem = ({ user, detailsBtnHandler }) => {
+import { actions } from "../../services/userService";
+
+export const UserItem = ({ user, actionHandler }) => {
   const defaultImg =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
@@ -18,7 +20,11 @@ export const UserItem = ({ user, detailsBtnHandler }) => {
       <td>{user.createdAt}</td>
 
       <td className="actions">
-        <button className="btn edit-btn" title="Edit">
+        <button
+          className="btn edit-btn"
+          title="Edit"
+          onClick={() => actionHandler(actions.Edit, user._id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -55,7 +61,7 @@ export const UserItem = ({ user, detailsBtnHandler }) => {
         <button
           className="btn info-btn"
           title="Info"
-          onClick={() => detailsBtnHandler(user._id)}
+          onClick={() => actionHandler(actions.Details, user._id)}
         >
           <svg
             aria-hidden="true"

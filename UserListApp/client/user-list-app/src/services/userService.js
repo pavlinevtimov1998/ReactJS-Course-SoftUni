@@ -13,3 +13,24 @@ export const getOne = async (id) => {
 
   return result.user;
 };
+
+export const edit = async (id, userData) => {
+  const res = await fetch(`${apiUrl}/users/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+
+  const result = await res.json();
+
+  return result.user;
+};
+
+export const actions = {
+  Details: "details",
+  Create: "create",
+  Edit: "edit",
+  Delete: "delete",
+};
