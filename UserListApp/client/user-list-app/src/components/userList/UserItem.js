@@ -1,7 +1,7 @@
-export const UserItem = ({ user }) => {
+export const UserItem = ({ user, detailsBtnHandler }) => {
   const defaultImg =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
-    
+
   return (
     <tr>
       <td>
@@ -52,7 +52,11 @@ export const UserItem = ({ user }) => {
             ></path>
           </svg>
         </button>
-        <button className="btn info-btn" title="Info">
+        <button
+          className="btn info-btn"
+          title="Info"
+          onClick={() => detailsBtnHandler(user._id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"

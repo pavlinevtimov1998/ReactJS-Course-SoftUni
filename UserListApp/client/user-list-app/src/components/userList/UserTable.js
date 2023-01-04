@@ -1,9 +1,28 @@
 import { NoUsers } from "./NoUsers";
 import { UserItem } from "./UserItem";
+import { UserDetails } from "../userList/UserDetails";
+
+import { getOne } from "../../services/userService";
+
+import { useState } from "react";
 
 export const UserTable = (props) => {
+  const [user, setUser] = useState(null);
+
+  const detailsBtnHandler = (id) => {
+    getOne(id).then((user) => setUser(user));
+  };
+
+  const closeModalHandler = () => {
+    setUser(null);
+  };
+
   return (
     <>
+      {user && (
+        <UserDetails user={user} closeModalHandler={closeModalHandler} />
+      )}
+
       <div className="table-wrapper">
         <table className="table">
           <thead>
@@ -106,7 +125,11 @@ export const UserTable = (props) => {
             {!props.users.length && <NoUsers />}
             {/* <!-- Table row component --> */}
             {props.users.map((user) => (
-              <UserItem key={user._id} user={user} />
+              <UserItem
+                key={user._id}
+                user={user}
+                detailsBtnHandler={detailsBtnHandler}
+              />
             ))}
           </tbody>
         </table>

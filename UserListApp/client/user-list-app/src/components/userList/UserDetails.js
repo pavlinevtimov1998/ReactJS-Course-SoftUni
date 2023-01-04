@@ -1,15 +1,15 @@
-export const UserDetails = ({ user }) => {
+export const UserDetails = ({ user, closeModalHandler }) => {
   const defaultImg =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
   return (
     <div className="overlay">
-      <div className="backdrop"></div>
+      <div className="backdrop" onClick={closeModalHandler}></div>
       <div className="modal">
         <div className="detail-container">
           <header className="headers">
             <h2>User Detail</h2>
-            <button className="btn close">
+            <button className="btn close" onClick={closeModalHandler}>
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -49,7 +49,7 @@ export const UserDetails = ({ user }) => {
               </p>
               <p>
                 Address:
-                <strong>{parsingAddres()}</strong>
+                <strong>{parsingAddres(user.address)}</strong>
               </p>
 
               <p>
