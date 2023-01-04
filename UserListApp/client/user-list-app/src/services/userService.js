@@ -6,3 +6,10 @@ export const getAll = async () => {
 
   return result.users;
 };
+
+export const getOne = async (id) => {
+  const res = await fetch(`${apiUrl}/users/${id}`);
+  const result = await res.json();
+
+  return result.user;
+};

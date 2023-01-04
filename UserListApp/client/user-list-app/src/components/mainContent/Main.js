@@ -9,10 +9,7 @@ export const Main = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getAll().then((result) => {
-      console.log(result);
-      setUsers(result);
-    });
+    getAll().then((result) => setUsers(result));
   }, []);
 
   const isUsers = users.length > 0 ? true : false;
