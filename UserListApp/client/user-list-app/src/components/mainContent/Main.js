@@ -25,6 +25,8 @@ export const Main = () => {
       );
     } else if (action === actions.Delete) {
       setUsers(users.filter((user) => user._id !== modifiedUser));
+    } else if (action === actions.Create) {
+      setUsers((users) => [...users, modifiedUser]);
     }
   };
 

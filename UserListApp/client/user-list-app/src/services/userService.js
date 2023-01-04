@@ -14,6 +14,19 @@ export const getOne = async (id) => {
   return result.user;
 };
 
+export const create = async (userData) => {
+  const res = await fetch(`${apiUrl}/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  const result = await res.json();
+
+  return result.user;
+};
+
 export const edit = async (id, userData) => {
   const res = await fetch(`${apiUrl}/users/${id}`, {
     method: "PUT",

@@ -1,12 +1,19 @@
-import { NoUsers } from "./NoUsers";
+// import { NoUsers } from "./NoUsers";
 import { UserItem } from "./UserItem";
 import { UserDetails } from "../userList/UserDetails";
 
-import { actions, deleteUser, edit, getOne } from "../../services/userService";
+import {
+  actions,
+  create,
+  deleteUser,
+  edit,
+  getOne,
+} from "../../services/userService";
 
 import { useState } from "react";
 import { EditUser } from "./EditUser";
 import { DeleteUser } from "./DeleteUser";
+import { CreateUser } from "./CreateUser";
 
 export const UserTable = (props) => {
   const [userAction, setUserAction] = useState({ user: null, action: null });
@@ -22,7 +29,33 @@ export const UserTable = (props) => {
       );
     } else if (action === actions.Delete) {
       setUserAction((userAction) => ({ user: user, action: action }));
+    } else if (action === actions.Create) {
+      setUserAction((userAction) => ({ ...userAction, action: action }));
     }
+  };
+
+  const createUser = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const { firstName, lastName, email, phoneNumber, imageUrl, ...address } =
+      Object.fromEntries(formData);
+
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      imageUrl,
+      address: address,
+    };
+
+    create(userData).then((user) => {
+      props.modifyUsers(user, userAction.action);
+      setUserAction({ user: null, action: null });
+      closeModalHandler();
+    });
   };
 
   const editUser = (e) => {
@@ -86,6 +119,12 @@ export const UserTable = (props) => {
         <DeleteUser
           closeModalHandler={closeModalHandler}
           deleteUserHandler={deleteUserHandler}
+        />
+      )}
+      {userAction.action === actions.Create && (
+        <CreateUser
+          closeModalHandler={closeModalHandler}
+          createUser={createUser}
         />
       )}
 
@@ -188,7 +227,6 @@ export const UserTable = (props) => {
             </tr>
           </thead>
           <tbody>
-
             {/* {!props.users.length && <NoUsers />} */}
 
             {props.users.map((user) => (
@@ -201,7 +239,12 @@ export const UserTable = (props) => {
           </tbody>
         </table>
       </div>
-      <button className="btn-add btn">Add new user</button>
+      <button
+        onClick={() => actionHandler(actions.Create)}
+        className="btn-add btn"
+      >
+        Add new user
+      </button>
     </>
   );
 };
