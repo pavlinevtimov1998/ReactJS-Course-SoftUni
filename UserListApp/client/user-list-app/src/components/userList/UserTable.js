@@ -20,13 +20,17 @@ export const UserTable = (props) => {
 
   const actionHandler = (action, user) => {
     if (action === actions.Details) {
-      getOne(user._id).then((user) =>
-        setUserAction((userAction) => ({ user: user, action: action }))
-      );
+      props.changeLoaderState();
+      getOne(user._id).then((user) => {
+        setUserAction((userAction) => ({ user: user, action: action }));
+        props.changeLoaderState();
+      });
     } else if (action === actions.Edit) {
-      getOne(user._id).then((user) =>
-        setUserAction((userAction) => ({ user: user, action: action }))
-      );
+      props.changeLoaderState();
+      getOne(user._id).then((user) => {
+        setUserAction((userAction) => ({ user: user, action: action }));
+        props.changeLoaderState();
+      });
     } else if (action === actions.Delete) {
       setUserAction((userAction) => ({ user: user, action: action }));
     } else if (action === actions.Create) {
@@ -51,10 +55,12 @@ export const UserTable = (props) => {
       address: address,
     };
 
+    props.changeLoaderState();
     create(userData).then((user) => {
       props.modifyUsers(user, userAction.action);
       setUserAction({ user: null, action: null });
       closeModalHandler();
+      props.changeLoaderState();
     });
   };
 
@@ -89,10 +95,12 @@ export const UserTable = (props) => {
 
     const userId = userAction.user._id;
 
+    props.changeLoaderState();
     deleteUser(userId).then((userId) => {
       props.modifyUsers(userId, userAction.action);
       setUserAction({ user: null, action: null });
       closeModalHandler();
+      props.changeLoaderState();
     });
   };
 

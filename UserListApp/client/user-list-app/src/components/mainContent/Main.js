@@ -1,16 +1,26 @@
 import { Search } from "../search/Search";
 import { UserTable } from "../userList/UserTable";
 import { Pagination } from "../pagination/Pagination";
+import { Spinner } from "../common/Spinner";
 
 import { useEffect, useState } from "react";
 import { actions, getAll } from "../../services/userService";
 
 export const Main = () => {
   const [users, setUsers] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    getAll().then((result) => setUsers(result));
+    changeLoaderState();
+    getAll().then((result) => {
+      setUsers(result);
+      changeLoaderState();
+    });
   }, []);
+
+  const changeLoaderState = () => {
+    setLoading((state) => !state);
+  };
 
   const modifyUsers = (modifiedUser, action) => {
     if (action === actions.Edit) {
@@ -34,6 +44,7 @@ export const Main = () => {
 
   return (
     <>
+      {isLoading && <Spinner />}
       <main className="main">
         <section className="card users-container">
           <Search />
@@ -42,6 +53,7 @@ export const Main = () => {
             users={users}
             isUsers={isUsers}
             modifyUsers={modifyUsers}
+            changeLoaderState={changeLoaderState}
           />
 
           <Pagination />
