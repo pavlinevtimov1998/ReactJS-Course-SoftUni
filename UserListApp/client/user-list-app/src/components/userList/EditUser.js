@@ -1,4 +1,31 @@
+import * as validators from "../../util/validators";
+
+import { useState } from "react";
+
 export const EditUser = ({ user, closeModalHandler, editUser }) => {
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phoneNumber: user.phoneNumber,
+    imageUrl: user.imageUrl,
+    country: user.address.country,
+    city: user.address.city,
+    street: user.address.street,
+    streetNumber: user.address.streetNumber,
+  });
+
+  const changeHandler = (e) => {
+    setValues((values) => ({
+      ...values,
+      [e.target.name]:
+        e.target.name === "streetNumber"
+          ? Number(e.target.value)
+          : e.target.value,
+    }));
+  };
+
   return (
     <div className="overlay">
       <div className="backdrop" onClick={closeModalHandler}></div>
@@ -36,12 +63,18 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    defaultValue={user.firstName}
+                    value={values.firstName}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.minLengthValidator(e, 3, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">
-                  First name should be at least 3 characters long!
-                </p>
+                {errors.firstName && (
+                  <p className="form-error">
+                    First name should be at least 3 characters long!
+                  </p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">Last name</label>
@@ -53,12 +86,18 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="lastName"
                     name="lastName"
                     type="text"
-                    defaultValue={user.lastName}
+                    value={values.lastName}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.minLengthValidator(e, 3, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">
-                  Last name should be at least 3 characters long!
-                </p>
+                {errors.lastName && (
+                  <p className="form-error">
+                    Last name should be at least 3 characters long!
+                  </p>
+                )}
               </div>
             </div>
 
@@ -73,10 +112,16 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="email"
                     name="email"
                     type="text"
-                    defaultValue={user.email}
+                    value={values.email}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.emailValidator(e, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">Email is not valid!</p>
+                {errors.email && (
+                  <p className="form-error">Email is not valid!</p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="phoneNumber">Phone number</label>
@@ -88,10 +133,16 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="phoneNumber"
                     name="phoneNumber"
                     type="text"
-                    defaultValue={user.phoneNumber}
+                    value={values.phoneNumber}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.minLengthValidator(e, 10, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">Phone number is not valid!</p>
+                {errors.phoneNumber && (
+                  <p className="form-error">Phone number is not valid!</p>
+                )}
               </div>
             </div>
 
@@ -105,10 +156,16 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                   id="imageUrl"
                   name="imageUrl"
                   type="text"
-                  defaultValue={user.imageUrl}
+                  value={values.imageUrl}
+                  onChange={changeHandler}
+                  onBlur={(e) =>
+                    validators.imageUrlValidator(e, setErrors, values)
+                  }
                 />
               </div>
-              <p className="form-error">ImageUrl is not valid!</p>
+              {errors.imageUrl && (
+                <p className="form-error">ImageUrl is not valid!</p>
+              )}
             </div>
 
             <div className="form-row">
@@ -122,12 +179,18 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="country"
                     name="country"
                     type="text"
-                    defaultValue={user.address.country}
+                    value={values.country}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.minLengthValidator(e, 2, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">
-                  Country should be at least 2 characters long!
-                </p>
+                {errors.country && (
+                  <p className="form-error">
+                    Country should be at least 2 characters long!
+                  </p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="city">City</label>
@@ -139,12 +202,18 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="city"
                     name="city"
                     type="text"
-                    defaultValue={user.address.city}
+                    value={values.city}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.minLengthValidator(e, 3, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">
-                  City should be at least 3 characters long!
-                </p>
+                {errors.city && (
+                  <p className="form-error">
+                    City should be at least 3 characters long!
+                  </p>
+                )}
               </div>
             </div>
 
@@ -159,12 +228,18 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="street"
                     name="street"
                     type="text"
-                    defaultValue={user.address.street}
+                    value={values.street}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.minLengthValidator(e, 3, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">
-                  Street should be at least 3 characters long!
-                </p>
+                {errors.street && (
+                  <p className="form-error">
+                    Street should be at least 3 characters long!
+                  </p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="streetNumber">Street number</label>
@@ -176,12 +251,18 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                     id="streetNumber"
                     name="streetNumber"
                     type="text"
-                    defaultValue={user.address.streetNumber}
+                    value={values.streetNumber}
+                    onChange={changeHandler}
+                    onBlur={(e) =>
+                      validators.positiveNumberValidator(e, setErrors, values)
+                    }
                   />
                 </div>
-                <p className="form-error">
-                  Street number should be a positive number!
-                </p>
+                {errors.streetNumber && (
+                  <p className="form-error">
+                    Street number should be a positive number!
+                  </p>
+                )}
               </div>
             </div>
             <div id="form-actions">
@@ -193,6 +274,10 @@ export const EditUser = ({ user, closeModalHandler, editUser }) => {
                 className="btn"
                 type="button"
                 onClick={closeModalHandler}
+                onChange={changeHandler}
+                onBlur={(e) =>
+                  validators.positiveNumberValidator(e, setErrors, values)
+                }
               >
                 Cancel
               </button>
