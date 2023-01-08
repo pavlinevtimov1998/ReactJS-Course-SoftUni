@@ -11,7 +11,7 @@ export const Home = () => {
         <h1>Latest Games</h1>
 
         {/* <!-- Display div: with information about every game (if any) --> */}
-        <div class="game">
+        {/* <div class="game">
           <div class="image-wrap">
             <img src="./images/CoverFire.png" />
           </div>
@@ -60,11 +60,11 @@ export const Home = () => {
             <span>☆</span>
           </div>
           <div class="data-buttons">
-            {/* <Link to="" className="btn details-btn">
+            <Link to="" className="btn details-btn">
               Details
-            </Link> */}
+            </Link>
           </div>
-        </div>
+        </div> */}
 
         {/* <!-- Display paragraph: If there is no games  --> */}
         <p class="no-articles">No games yet</p>

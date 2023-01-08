@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Header } from "./components/Header";
-import { Home } from "./components/Home";
+import { Header } from "./components/common/Header";
+import { Home } from "./components/common/Home";
 
 function App() {
   return (
