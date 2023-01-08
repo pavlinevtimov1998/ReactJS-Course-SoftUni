@@ -1,9 +1,9 @@
 import { GameHomeItem } from "./GameHomeItem";
 
-export const Home = () => {
+export const Home = ({ games }) => {
   return (
     <section id="welcome-world">
-      <div class="welcome-message">
+      <div className="welcome-message">
         <h2>ALL new games are</h2>
         <h3>Only in GamesPlay</h3>
       </div>
@@ -12,11 +12,11 @@ export const Home = () => {
       <div id="home-page">
         <h1>Latest Games</h1>
 
-        {/* <!-- Display div: with information about every game (if any) --> */}
-        <GameHomeItem />
+        {games.map((game) => (
+          <GameHomeItem key={game._id} game={game} />
+        ))}
 
-        {/* <!-- Display paragraph: If there is no games  --> */}
-        <p class="no-articles">No games yet</p>
+        {games.length === 0 && <p className="no-articles">No games yet</p>}
       </div>
     </section>
   );
