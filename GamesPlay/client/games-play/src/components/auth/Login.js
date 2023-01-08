@@ -20,6 +20,10 @@ export const Login = () => {
   const loginHandler = (e) => {
     e.preventDefault();
 
+    if (data.email.length === 0 || data.password.length === 0) {
+      return alert("All fields are required!");
+    }
+
     login(data).then((result) => {
       handleLogin(result);
       navigate("/", { replace: true });
@@ -38,7 +42,7 @@ export const Login = () => {
             id="email"
             name="email"
             placeholder="Sokka@gmail.com"
-            value={data.username}
+            value={data.email}
             onChange={onChangeHandler}
           />
           <label htmlFor="login-pass">Password:</label>
@@ -52,7 +56,7 @@ export const Login = () => {
           <input type="submit" className="btn submit" defaultValue="Login" />
           <p className="field">
             <span>
-              If you don't have profile click <Link to="/Register">here</Link>
+              If you don't have profile click <Link to="/register">here</Link>
             </span>
           </p>
         </div>
