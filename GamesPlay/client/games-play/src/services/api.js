@@ -26,16 +26,19 @@ function createOptions(method, data) {
   };
 
   if (data) {
-    options.headers["X-Authorization"] = "";
+    options.headers["Content-Type"] = "application/json";
     options["body"] = JSON.stringify(data);
   }
+
+  // options.headers["X-Authorization"] = "";
 
   return options;
 }
 
 export const getRequest = (url) => request(url, createOptions("GET"));
 
-export const postRequest = (url) => request(url, createOptions("POST"));
+export const postRequest = (url, data) =>
+  request(url, createOptions("POST", data));
 
 export const putRequest = (url) => request(url, createOptions("PUT"));
 
