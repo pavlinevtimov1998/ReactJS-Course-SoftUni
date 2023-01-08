@@ -6,6 +6,7 @@ const endpoints = {
   create: "/data/games",
   getOne: "/data/games/",
   getComments: (gameId) => `/data/comments?where=gameId%3D%22${gameId}%22`,
+  addComment: "/data/comments",
 };
 
 export const getHomeGames = () => api.getRequest(endpoints.homeGames);
@@ -19,3 +20,6 @@ export const getOneGame = (gameId) => api.getRequest(endpoints.getOne + gameId);
 
 export const getComments = (gameId) =>
   api.getRequest(endpoints.getComments(gameId));
+
+export const createComment = (comment, gameId, token) =>
+  api.postRequest(endpoints.addComment, { comment, gameId }, token);

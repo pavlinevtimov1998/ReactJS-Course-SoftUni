@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const CommentForm = () => {
+export const CommentForm = ({ addComment }) => {
   const [comment, setComment] = useState("");
 
   const onChangeHandler = (e) => setComment((state) => e.target.value);
@@ -8,7 +8,11 @@ export const CommentForm = () => {
   const createCommentHandler = (e) => {
     e.preventDefault();
 
-    console.log(comment);
+    if (comment.length === 0) {
+      return;
+    }
+
+    addComment(comment);
   };
   return (
     <article className="create-comment">

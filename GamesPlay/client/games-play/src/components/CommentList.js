@@ -2,8 +2,8 @@ export const CommentList = ({ comments }) => {
   return (
     <ul>
       {comments.map((c) => (
-        <li className="comment">
-          <p>{c.text}</p>
+        <li key={c._id} className="comment">
+          <p>{c.comment}</p>
         </li>
       ))}
     </ul>

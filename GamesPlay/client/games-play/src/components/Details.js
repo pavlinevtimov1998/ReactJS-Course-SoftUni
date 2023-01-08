@@ -3,7 +3,11 @@ import { Link, useParams } from "react-router-dom";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-import { getComments, getOneGame } from "../services/gameService";
+import {
+  getComments,
+  getOneGame,
+  createComment,
+} from "../services/gameService";
 import { CommentList } from "./CommentList";
 import { CommentForm } from "./CommentsForm";
 
@@ -20,6 +24,15 @@ export const Details = () => {
 
   const deleteHandler = (e) => {
     e.preventDefault();
+  };
+
+  const addComment = (comment) => {
+    createComment(comment, gameId, user.accessToken).then((result) =>
+      setGame((state) => ({
+        ...state,
+        comments: [...state.comments, result],
+      }))
+    );
   };
 
   if (!game) {
@@ -61,7 +74,7 @@ export const Details = () => {
         )}
       </div>
 
-      {user && !isOwner && <CommentForm />}
+      {user && !isOwner && <CommentForm addComment={addComment} />}
     </section>
   );
 };
