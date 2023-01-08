@@ -40,8 +40,8 @@ function createOptions(method, data, token) {
 export const getRequest = (url, token) =>
   request(url, createOptions("GET", undefined, token));
 
-export const postRequest = (url, data) =>
-  request(url, createOptions("POST", data));
+export const postRequest = (url, data, token) =>
+  request(url, createOptions("POST", data, token));
 
 export const putRequest = (url) => request(url, createOptions("PUT"));
 
