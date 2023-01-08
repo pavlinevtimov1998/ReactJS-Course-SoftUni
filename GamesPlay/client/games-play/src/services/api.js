@@ -43,6 +43,7 @@ export const getRequest = (url, token) =>
 export const postRequest = (url, data, token) =>
   request(url, createOptions("POST", data, token));
 
-export const putRequest = (url) => request(url, createOptions("PUT"));
+export const putRequest = (url, data, token) =>
+  request(url, createOptions("PUT", data, token));
 
 export const deleteRequest = (url) => request(url, createOptions("DELETE"));

@@ -16,6 +16,9 @@ export const getCatalogGames = () => api.getRequest(endpoints.catalogGames);
 export const createGame = (data, token) =>
   api.postRequest(endpoints.create, data, token);
 
+export const editGame = (gameId, data, token) =>
+  api.putRequest(endpoints.getOne + gameId, data, token);
+
 export const getOneGame = (gameId) => api.getRequest(endpoints.getOne + gameId);
 
 export const getComments = (gameId) =>

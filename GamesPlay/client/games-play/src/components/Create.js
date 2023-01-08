@@ -28,8 +28,9 @@ export const Create = () => {
       return alert("All fields are required!");
     }
 
-    createGame(data, user.accessToken).then(() => navigate("/"));
-    
+    createGame(data, user.accessToken).then((result) =>
+      navigate("/details/" + result._id)
+    );
   };
   return (
     <section id="create-page" className="auth" onSubmit={createGameHandler}>
