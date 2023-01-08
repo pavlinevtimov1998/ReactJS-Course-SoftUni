@@ -4,22 +4,22 @@ async function request(url, options) {
   const res = await fetch(apiUrl + url, options);
 
   if (res.ok !== true) {
-    if (res.status == 403) {
-      console.log("403");
+    if (res.status === 403) {
+      return null;
     }
 
     const error = await res.json();
     throw new Error(error.message);
   }
 
-  if (res.status == 203) {
+  if (res.status === 203) {
     return res;
   } else {
     return res.json();
   }
 }
 
-function createOptions(method, data) {
+function createOptions(method, data, token) {
   const options = {
     method,
     headers: {},
@@ -30,12 +30,15 @@ function createOptions(method, data) {
     options["body"] = JSON.stringify(data);
   }
 
-  // options.headers["X-Authorization"] = "";
+  if (token) {
+    options.headers["X-Authorization"] = token;
+  }
 
   return options;
 }
 
-export const getRequest = (url) => request(url, createOptions("GET"));
+export const getRequest = (url, token) =>
+  request(url, createOptions("GET", undefined, token));
 
 export const postRequest = (url, data) =>
   request(url, createOptions("POST", data));
