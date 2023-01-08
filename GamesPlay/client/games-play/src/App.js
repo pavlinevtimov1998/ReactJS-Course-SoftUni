@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
+import { AuthProvider } from "./contexts/AuthContext";
+
 import { Header } from "./components/common/Header";
 import { Home } from "./components/common/Home";
 import { Details } from "./components/Details";
@@ -11,24 +13,26 @@ import { Register } from "./components/auth/Register";
 
 function App() {
   return (
-    <div id="box">
-      <Header />
+    <AuthProvider>
+      <div id="box">
+        <Header />
 
-      <main id="main-content">
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
+        <main id="main-content">
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
 
-          <Route path="/catalog" element={<Catalog />}></Route>
-          <Route path="/details/:gameId" element={<Details />}></Route>
+            <Route path="/catalog" element={<Catalog />}></Route>
+            <Route path="/details/:gameId" element={<Details />}></Route>
 
-          <Route path="/create" element={<Create />}></Route>
-          <Route path="/edit/:gameId" element={<Edit />}></Route>
+            <Route path="/create" element={<Create />}></Route>
+            <Route path="/edit/:gameId" element={<Edit />}></Route>
 
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-        </Routes>
-      </main>
-    </div>
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+          </Routes>
+        </main>
+      </div>
+    </AuthProvider>
   );
 }
 
