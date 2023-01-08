@@ -3,7 +3,7 @@ export const CommentList = ({ comments }) => {
     <ul>
       {comments.map((c) => (
         <li className="comment">
-          <p>{c}</p>
+          <p>{c.text}</p>
         </li>
       ))}
     </ul>

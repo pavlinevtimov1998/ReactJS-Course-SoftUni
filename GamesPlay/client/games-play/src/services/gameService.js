@@ -5,6 +5,7 @@ const endpoints = {
   catalogGames: "/data/games?sortBy=_createdOn%20desc",
   create: "/data/games",
   getOne: "/data/games/",
+  getComments: (gameId) => `/data/comments?where=gameId%3D%22${gameId}%22`,
 };
 
 export const getHomeGames = () => api.getRequest(endpoints.homeGames);
@@ -15,3 +16,6 @@ export const createGame = (data, token) =>
   api.postRequest(endpoints.create, data, token);
 
 export const getOneGame = (gameId) => api.getRequest(endpoints.getOne + gameId);
+
+export const getComments = (gameId) =>
+  api.getRequest(endpoints.getComments(gameId));

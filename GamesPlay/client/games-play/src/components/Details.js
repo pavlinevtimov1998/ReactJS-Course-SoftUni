@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-import { getOneGame } from "../services/gameService";
+import { getComments, getOneGame } from "../services/gameService";
 import { CommentList } from "./CommentList";
 import { CommentForm } from "./CommentsForm";
 
@@ -13,15 +13,13 @@ export const Details = () => {
   const [game, setGame] = useState(null);
 
   useEffect(() => {
-    getOneGame(gameId).then((result) =>
-      setGame({ ...result, comments: result.comments || [] })
+    Promise.all([getOneGame(gameId), getComments(gameId)]).then(
+      ([gameData, comments]) => setGame({ ...gameData, comments: comments })
     );
   }, [gameId]);
 
   const deleteHandler = (e) => {
     e.preventDefault();
-
-    console.log(game);
   };
 
   if (!game) {
@@ -45,7 +43,7 @@ export const Details = () => {
         <div className="details-comments">
           <h2>Comments:</h2>
           {game.comments.length > 0 ? (
-            <CommentList />
+            <CommentList comments={game.comments} />
           ) : (
             <p className="no-comment">No comments.</p>
           )}
