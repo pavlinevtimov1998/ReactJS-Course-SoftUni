@@ -13,6 +13,7 @@ export const CommentForm = ({ addComment }) => {
     }
 
     addComment(comment);
+    setComment("");
   };
   return (
     <article className="create-comment">

@@ -26,3 +26,6 @@ export const getComments = (gameId) =>
 
 export const createComment = (comment, gameId, token) =>
   api.postRequest(endpoints.addComment, { comment, gameId }, token);
+
+export const deleteGame = (gameId, token) =>
+  api.deleteRequest(endpoints.getOne + gameId, token);

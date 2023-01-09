@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -7,6 +7,7 @@ import {
   getComments,
   getOneGame,
   createComment,
+  deleteGame,
 } from "../services/gameService";
 import { CommentList } from "./CommentList";
 import { CommentForm } from "./CommentsForm";
@@ -14,6 +15,7 @@ import { CommentForm } from "./CommentsForm";
 export const Details = () => {
   const { user } = useContext(AuthContext);
   const { gameId } = useParams();
+  const navigate = useNavigate();
   const [game, setGame] = useState(null);
 
   useEffect(() => {
@@ -24,6 +26,8 @@ export const Details = () => {
 
   const deleteHandler = (e) => {
     e.preventDefault();
+
+    deleteGame(gameId, user.accessToken).then(() => navigate("/"));
   };
 
   const addComment = (comment) => {
