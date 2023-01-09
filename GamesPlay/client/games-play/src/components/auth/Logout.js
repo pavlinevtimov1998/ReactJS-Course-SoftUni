@@ -15,6 +15,7 @@ export const Logout = () => {
         navigate("/", { replace: true });
       })
       .catch((err) => {
+        handleLogout();
         navigate("/", { replace: true });
       });
   });

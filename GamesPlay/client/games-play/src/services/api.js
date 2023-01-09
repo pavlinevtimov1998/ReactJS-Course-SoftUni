@@ -5,7 +5,7 @@ async function request(url, options) {
 
   if (res.ok !== true) {
     if (res.status === 403) {
-      return null;
+      throw new Error("Forbidden");
     }
 
     const error = await res.json();
@@ -46,4 +46,5 @@ export const postRequest = (url, data, token) =>
 export const putRequest = (url, data, token) =>
   request(url, createOptions("PUT", data, token));
 
-export const deleteRequest = (url) => request(url, createOptions("DELETE"));
+export const deleteRequest = (url, token) =>
+  request(url, createOptions("DELETE", undefined, token));
