@@ -11,6 +11,7 @@ import { Edit } from "./components/Edit";
 import { Login } from "./components/auth/Login";
 import { Register } from "./components/auth/Register";
 import { Logout } from "./components/auth/Logout";
+import { PrivateGuard } from "./components/common/PrivateGuard";
 
 function App() {
   return (
@@ -25,11 +26,16 @@ function App() {
             <Route path="/catalog" element={<Catalog />}></Route>
             <Route path="/details/:gameId" element={<Details />}></Route>
 
-            <Route path="/create" element={<Create />}></Route>
-            <Route path="/edit/:gameId" element={<Edit />}></Route>
-            <Route path="/logout" element={<Logout />}></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route element={<PrivateGuard />}>
+              <Route path="/create" element={<Create />}></Route>
+              <Route path="/logout" element={<Logout />}></Route>
+              <Route path="/edit/:gameId" element={<Edit />}></Route>
+            </Route>
+
+            <Route>
+              <Route path="/register" element={<Register />}></Route>
+              <Route path="/login" element={<Login />}></Route>
+            </Route>
           </Routes>
         </main>
       </div>
